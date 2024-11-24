@@ -1,0 +1,51 @@
+a. greeting
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Greeting Program</title>
+</head>
+<body>
+    <h1>Greeting Program</h1>
+    <form method="post">
+        <label for="username">Enter Your Name:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+        <button type="submit">Greet Me</button>
+    </form>
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = htmlspecialchars($_POST['username']); // Sanitize input
+        echo "<h2>Hello, " . $username . "! Welcome to the website!</h2>";
+    }
+    ?>
+</body>
+</html>
+
+
+b. visitor counts
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visitor Counter</title>
+</head>
+<body>
+    <h1>Welcome to the Visitor Counter Page</h1>
+
+    <?php
+        $counter_file = "counter.txt";
+
+        if (!file_exists($counter_file)) {
+            file_put_contents($counter_file, "0");
+        }
+
+        $current_count = (int) file_get_contents($counter_file);
+        $current_count++;
+        file_put_contents($counter_file, $current_count);
+
+    
+        echo "<h2>Total Visitors: $current_count</h2>";
+    ?>
+</body>
+</html>
