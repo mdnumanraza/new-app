@@ -7,6 +7,10 @@ const PORT = 3000;
 
 const BASE_DIR = path.join(__dirname, 'public');
 
+app.get('/', (req, res)=>{
+    res.send('working ✅')
+})
+
 app.get('/:category/:file', (req, res) => {
     const { category, file } = req.params;
 
