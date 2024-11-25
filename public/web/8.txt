@@ -1,0 +1,77 @@
+//phpfile
+
+addbook.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book Information</title>
+</head>
+<body>
+    <h1>Add Book Information</h1>
+    <form action="store_book.php" method="post">
+        <label for="accession_number">Accession Number:</label><br>
+        <input type="number" id="accession_number" name="accession_number" required><br><br>
+
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="authors">Authors:</label><br>
+        <input type="text" id="authors" name="authors" required><br><br>
+
+        <label for="edition">Edition:</label><br>
+        <input type="text" id="edition" name="edition"><br><br>
+
+        <label for="publication">Publication:</label><br>
+        <input type="text" id="publication" name="publication"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
+
+storebook.php
+<?php
+// Database connection
+$conn = new mysqli("localhost", "root", "", "library_db");
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Retrieve form data
+$accession_number = $_POST['accession_number'];
+$title = $_POST['title'];
+$authors = $_POST['authors'];
+$edition = $_POST['edition'];
+$publication = $_POST['publication'];
+
+// SQL query to insert data
+$sql = "INSERT INTO books (accession_number, title, authors, edition, publication) 
+        VALUES ('$accession_number', '$title', '$authors', '$edition', '$publication')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "<h1>Book information added successfully!</h1>";
+    echo "<a href='add_book.html'>Add Another Book</a>";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+// Close connection
+$conn->close();
+?>
+
+
+
+
+//database
+CREATE TABLE books (
+    accession_number INT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    authors VARCHAR(255) NOT NULL,
+    edition VARCHAR(50),
+    publication VARCHAR(255)
+);
