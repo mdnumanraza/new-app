@@ -58,3 +58,24 @@
     ?>
 </body>
 </html>
+
+
+
+database:
+CREATE TABLE test_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT
+);
+
+INSERT INTO test_table (name, age) VALUES
+('Charlie', 28),
+('Diana', 22),
+('Eve', 35),
+('Frank', 40),
+('Grace', 27),
+('Hank', 32),
+('Ivy', 29),
+('Jack', 21),
+('Karen', 45);
+
