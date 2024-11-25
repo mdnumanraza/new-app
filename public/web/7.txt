@@ -1,0 +1,80 @@
+//query.php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Query</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Student Records</h1>
+    <?php
+    // Connect to the database
+    $conn = new mysqli("localhost", "root", "", "web_lab");
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Query to fetch data
+    $sql = "SELECT * FROM students";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        echo "<table>";
+        echo "<tr><th>ID</th><th>Name</th><th>Age</th><th>Grade</th></tr>";
+
+        // Display each row of the table
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>{$row['id']}</td>";
+            echo "<td>{$row['name']}</td>";
+            echo "<td>{$row['age']}</td>";
+            echo "<td>{$row['grade']}</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+    } else {
+        echo "<p style='text-align: center;'>No records found!</p>";
+    }
+
+    // Close the connection
+    $conn->close();
+    ?>
+</body>
+</html>
+
+
+
+
+
+//datbase section
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    grade VARCHAR(5) NOT NULL
+);
+
+INSERT INTO students (name, age, grade) VALUES
+('Alice', 20, 'A'),
+('Bob', 22, 'B'),
+('Charlie', 21, 'A'),
+('Diana', 23, 'C');
