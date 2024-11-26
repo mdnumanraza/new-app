@@ -1,0 +1,17 @@
+dc motor:
+
+const int motorPin = 9; // Pin connected to the transistor base
+
+void setup() {
+  pinMode(motorPin, OUTPUT); // Set motorPin as output
+}
+
+void loop() {
+  digitalWrite(motorPin, HIGH); // Turn the motor ON
+  delay(2000);                 // Run for 2 seconds
+  digitalWrite(motorPin, LOW);  // Turn the motor OFF
+  delay(2000);                 // Wait for 2 seconds
+}
+
+
+stepper motor
