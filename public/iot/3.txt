@@ -1,11 +1,11 @@
-program 3- (LDR )
+program 3 - ( LDR )
 
 circuit link: https://wokwi.com/projects/411090995575472129
 
 
 //code:
 
-int ldrPin = A0;  // LDR connected to analog pin A0
+int ldrPin = A0;  
 int ledPin = 13;  // LED connected to digital pin 13
 int threshold = 400;  // Threshold for detecting darkness
 
