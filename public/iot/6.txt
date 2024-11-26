@@ -59,20 +59,22 @@ void loop() {
 
 #include <SimpleDHT.h>
 
-// Pin connected to the DHT11 data pin
-int pinDHT11 = 8; 
+// Pin configurations
+int pinDHT11 = 8; // DHT11 data pin
+int ledPin = 13;  // LED pin
+
 SimpleDHT11 dht11(pinDHT11);
 
 void setup() {
+  pinMode(ledPin, OUTPUT); // Set the LED pin as output
   Serial.begin(9600);
-  Serial.println("DHT11 Temperature and Humidity Sensor Example");
+  Serial.println("DHT11 Sensor with LED Control");
 }
 
 void loop() {
-  // Variables to store temperature and humidity
   byte temperature = 0;
   byte humidity = 0;
-  
+
   // Read data from the DHT11 sensor
   int err = dht11.read(&temperature, &humidity, nullptr);
   if (err != SimpleDHTErrSuccess) {
@@ -82,16 +84,26 @@ void loop() {
     return;
   }
 
-  // Print temperature and humidity
+  // Print the temperature and humidity
   Serial.print("Temperature: ");
   Serial.print((int)temperature);
   Serial.println(" °C");
-  
+
   Serial.print("Humidity: ");
   Serial.print((int)humidity);
   Serial.println(" %");
-  
-  // Delay between readings
+
+  // Check if temperature exceeds 30°C
+  if (temperature > 30) {
+    digitalWrite(ledPin, HIGH); // Turn on the LED
+    Serial.println("Temperature is high! LED is ON.");
+  } else {
+    digitalWrite(ledPin, LOW); // Turn off the LED
+    Serial.println("Temperature is normal. LED is OFF.");
+  }
+
+  // Wait before the next reading
   delay(3000);
 }
+
 
