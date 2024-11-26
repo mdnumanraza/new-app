@@ -1,0 +1,40 @@
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600); // Added missing semicolon
+  pinMode(7, OUTPUT); // Trigger pin
+  pinMode(6, INPUT);  // Echo pin
+  pinMode(13, OUTPUT); // LED pin (if you're using it)
+}
+
+long duration, inches;
+
+void loop() {
+  // Clear the trigger
+  digitalWrite(7, LOW);
+  delayMicroseconds(2);
+  
+  // Set the trigger high for 10 microseconds
+  digitalWrite(7, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(7, LOW);
+
+  // Read the echo pin
+  duration = pulseIn(6, HIGH);
+
+  // Convert duration to inches
+  inches = msToInches(duration);
+  Serial.print(inches);
+  Serial.println(" in");
+
+  // Control LED or other output based on distance
+  digitalWrite(13, inches <= 100 ? HIGH : LOW);
+  
+  // Wait for a bit before next measurement
+  delay(100);
+}
+
+long msToInches(long ms) {
+  // 34300 cm/s / 2 = 17150 cm/s
+  // 17150 cm/s = 674.0 inches/s, hence we divide by 74.0 for time in ms
+  return ms / 74 / 2; // Corrected the formula to use / 2
+}
