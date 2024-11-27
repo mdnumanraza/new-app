@@ -2,8 +2,8 @@
 #include <DHT_U.h>
 
 #define DHTPIN 2     
-#define DHTTYPE DHT11   // DHT 11
-#define LIGHTPIN 13      // Pin to control the light
+#define DHTTYPE DHT11   
+#define LIGHTPIN 13     
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -12,8 +12,8 @@ void setup() {
   Serial.println(F("DHTxx test!"));
 
   dht.begin();
-  pinMode(LIGHTPIN, OUTPUT);  // Set the light pin as an output
-  digitalWrite(LIGHTPIN, LOW); // Ensure the light is off initially
+  pinMode(LIGHTPIN, OUTPUT);  
+  digitalWrite(LIGHTPIN, LOW); 
 }
 
 void loop() {
@@ -36,20 +36,13 @@ void loop() {
   Serial.print(F("%  Temperature: "));
   Serial.print(t);
   Serial.print(F("°C "));
-  Serial.print(f);
-  Serial.print(F("°F  Heat index: "));
-  Serial.print(hic);
-  Serial.print(F("°C "));
-  Serial.print(hif);
-  Serial.println(F("°F"));
+ 
 
-  // Check conditions for turning on the light
   if (h > 50 || t > 30) {
     digitalWrite(LIGHTPIN, HIGH);
 
-    // Turn the light on
   } else {
-    digitalWrite(LIGHTPIN, LOW);  // Turn the light off
+    digitalWrite(LIGHTPIN, LOW); 
   }
 }
 
@@ -59,9 +52,8 @@ void loop() {
 
 #include <SimpleDHT.h>
 
-// Pin configurations
-int pinDHT11 = 8; // DHT11 data pin
-int ledPin = 13;  // LED pin
+int pinDHT11 = 8;
+int ledPin = 13; 
 
 SimpleDHT11 dht11(pinDHT11);
 
@@ -75,7 +67,6 @@ void loop() {
   byte temperature = 0;
   byte humidity = 0;
 
-  // Read data from the DHT11 sensor
   int err = dht11.read(&temperature, &humidity, nullptr);
   if (err != SimpleDHTErrSuccess) {
     Serial.print("Read error: ");
@@ -84,7 +75,6 @@ void loop() {
     return;
   }
 
-  // Print the temperature and humidity
   Serial.print("Temperature: ");
   Serial.print((int)temperature);
   Serial.println(" °C");
@@ -93,12 +83,11 @@ void loop() {
   Serial.print((int)humidity);
   Serial.println(" %");
 
-  // Check if temperature exceeds 30°C
   if (temperature > 30) {
-    digitalWrite(ledPin, HIGH); // Turn on the LED
+    digitalWrite(ledPin, HIGH);
     Serial.println("Temperature is high! LED is ON.");
   } else {
-    digitalWrite(ledPin, LOW); // Turn off the LED
+    digitalWrite(ledPin, LOW); 
     Serial.println("Temperature is normal. LED is OFF.");
   }
 
