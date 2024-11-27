@@ -1,17 +1,55 @@
-dc motor:
+Dc motor 
 
-const int motorPin = 9; // Pin connected to the transistor base
+int motorPin = 9; // PWM pin connected to the motor
 
 void setup() {
-  pinMode(motorPin, OUTPUT); // Set motorPin as output
+  // Set the motor pin as output
+  pinMode(motorPin, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(motorPin, HIGH); // Turn the motor ON
-  delay(2000);                 // Run for 2 seconds
-  digitalWrite(motorPin, LOW);  // Turn the motor OFF
-  delay(2000);                 // Wait for 2 seconds
+  // Turn the motor ON at full speed
+  analogWrite(motorPin, 255); // 255 is the maximum PWM value (100% duty cycle)
+  
+  // Keep the motor ON for 5 seconds
+  delay(5000);
+  
+  // Turn the motor OFF
+  analogWrite(motorPin, 0);
+  
+  // Keep the motor OFF for 5 seconds
+  delay(5000);
 }
 
+Stepper motor 
 
-stepper motor
+#include <Stepper.h>
+
+// Define the number of steps per revolution for your stepper motor
+const int stepsPerRevolution = 2048; // For 28BYJ-48 motor with ULN2003
+
+// Create a Stepper object
+Stepper myStepper(stepsPerRevolution, 8, 10, 9, 11); // Pins connected to IN1, IN3, IN2, IN4
+
+void setup() {
+  // Set the speed of the stepper motor
+  myStepper.setSpeed(10); // Speed in RPM
+  
+  // Print a message to indicate initialization
+  Serial.begin(9600);
+  Serial.println("Stepper motor initialized.");
+}
+
+void loop() {
+  // Step the motor forward
+  Serial.println("Stepping forward...");
+  myStepper.step(stepsPerRevolution); // Full revolution
+  
+  delay(1000); // Wait 1 second
+  
+  // Step the motor backward
+  Serial.println("Stepping backward...");
+  myStepper.step(-stepsPerRevolution); // Full revolution in the opposite direction
+  
+  delay(1000); // Wait 1 second
+}
